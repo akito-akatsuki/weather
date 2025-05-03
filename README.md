@@ -4,7 +4,6 @@ req:\
 -node
 
 command:
-
 cd /your/folder/location\
 git clone https://github.com/akito-akatsuki/weather\
 npm install react-script\
