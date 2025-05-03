@@ -1,7 +1,7 @@
 # This is my first react app
 req:\
 -npm\
--node\
+-node
 
 command:\
 ###cd /your/folder/location\
