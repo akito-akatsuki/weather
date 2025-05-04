@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import getWeatherIcon from "./weathericon.js";
-import LoadingAnimation from "./loader/LoadingAnimation"; // Import loader
 
 // //---------img----------------------//
 import cloudy from "./img/cloudy.gif";
@@ -24,43 +23,24 @@ const App = () => {
   );
   const [weather, setWeather] = useState(null);
   const [showApp, setShowApp] = useState(!!localStorage.getItem("location"));
-  const [loading, setLoading] = useState(false); // Thêm trạng thái loading
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(false); // Thêm trạng thái lỗi
+
   const apiKey = "0517ac7c7534525453d9ceaed565af2d";
   const units = "metric";
 
   const fetchWeather = async (loc) => {
-    setLoading(true); // Hiển thị animation khi bắt đầu tải
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${loc}&units=${units}&appid=${apiKey}`;
     try {
       const response = await fetch(url);
       if (!response.ok) {
-        throw new Error("Vị trí không hợp lệ");
+        throw new Error("Vị trí không hợp lệ"); // Kiểm tra lỗi API
       }
       const data = await response.json();
       setWeather(data);
       setError(false);
     } catch (error) {
       setWeather(null);
-      setError(true);
-    } finally {
-      setTimeout(() => {
-        setLoading(false); // Dừng animation sau khi tải xong + thời gian chờ thêm
-      }, 3000); // Hiển thị animation thêm 3 giây trước khi ẩn
-    }
-  };
-
-  useEffect(() => {
-    if (location) fetchWeather(location);
-  }, [location]);
-
-  const handleSubmit = () => {
-    if (location.trim()) {
-      localStorage.setItem("location", location.trim());
-      setShowApp(true);
-      fetchWeather(location.trim());
-    } else {
-      alert("Vui lòng nhập vị trí!");
+      setError(true); // Nếu nhập sai, đặt trạng thái lỗi thành `true`
     }
   };
 
@@ -105,11 +85,25 @@ const App = () => {
       "N/NW",
     ][Math.round(dir / 22.5) % 16] || "Invalid direction";
 
+  useEffect(() => {
+    if (location) fetchWeather(location);
+  }, [location]);
+
+  const handleSubmit = () => {
+    if (location.trim()) {
+      localStorage.setItem("location", location.trim());
+      setShowApp(true);
+      fetchWeather(location.trim()); // Gọi API ngay khi nhập vị trí
+    } else {
+      alert("Vui lòng nhập vị trí!");
+    }
+  };
+
   const handleGoBack = () => {
     localStorage.removeItem("location");
     setLocation("");
     setShowApp(false);
-    setError(false);
+    setError(false); // Đặt lại trạng thái lỗi
   };
 
   return (
