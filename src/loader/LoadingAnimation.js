@@ -1,21 +1,18 @@
 import React from "react";
 import "./style.css"; // Import CSS loader
 
-const LoadingAnimation = () => {
+export default function LoadingAnimation() {
   return (
-    <div class="preloader-2">
-      <span class="line line-1"></span>
-      <span class="line line-2"></span>
-      <span class="line line-3"></span>
-      <span class="line line-4"></span>
-      <span class="line line-5"></span>
-      <span class="line line-6"></span>
-      <span class="line line-7"></span>
-      <span class="line line-8"></span>
-      <span class="line line-9"></span>
-      <div>Loading</div>
+    <div class="spinner-box">
+      <div class="blue-orbit leo"></div>
+
+      <div class="green-orbit leo"></div>
+
+      <div class="red-orbit leo"></div>
+
+      <div class="white-orbit w1 leo"></div>
+      <div class="white-orbit w2 leo"></div>
+      <div class="white-orbit w3 leo"></div>
     </div>
   );
-};
-
-export default LoadingAnimation;
+}

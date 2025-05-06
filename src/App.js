@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import "./loader/cursor.js";
+import "./loader/cursor.css";
 import getWeatherIcon from "./weathericon.js";
+import LoadingAnimation from "./loader/LoadingAnimation.js";
 
 // //---------img----------------------//
 import cloudy from "./img/cloudy.gif";
@@ -21,14 +24,16 @@ const App = () => {
   const [location, setLocation] = useState(
     localStorage.getItem("location") || ""
   );
+  const [Loading, setLoading] = useState(false);
   const [weather, setWeather] = useState(null);
   const [showApp, setShowApp] = useState(!!localStorage.getItem("location"));
   const [error, setError] = useState(false); // Thêm trạng thái lỗi
 
-  const apiKey = "0517ac7c7534525453d9ceaed565af2d";
+  const apiKey = "983852ff3420c6319ff06fef215971f5";
   const units = "metric";
 
   const fetchWeather = async (loc) => {
+    setLoading(true);
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${loc}&units=${units}&appid=${apiKey}`;
     try {
       const response = await fetch(url);
@@ -41,6 +46,10 @@ const App = () => {
     } catch (error) {
       setWeather(null);
       setError(true); // Nếu nhập sai, đặt trạng thái lỗi thành `true`
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     }
   };
 
@@ -87,7 +96,7 @@ const App = () => {
 
   useEffect(() => {
     if (location) fetchWeather(location);
-  }, [location]);
+  }, []);
 
   const handleSubmit = () => {
     if (location.trim()) {
@@ -107,53 +116,61 @@ const App = () => {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "20px" }}>
-      {!showApp ? (
-        <>
-          <h1>Nhập Vị Trí</h1>
-          <input
-            className="input"
-            type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="Nhập tên thành phố hoặc địa điểm"
-          />
-          <button className="submit" onClick={handleSubmit}>
-            Xác Nhận
-          </button>
-        </>
-      ) : error ? (
-        // Hiển thị thông báo lỗi và nút quay lại nếu nhập sai vị trí
-        <div className="error">
-          <h2>Không tìm thấy vị trí "{location}"</h2>
-          <p>Vui lòng kiểm tra lại hoặc nhập một vị trí khác.</p>
-          <button className="submit" onClick={handleGoBack}>
-            Quay lại nhập vị trí
-          </button>
-        </div>
-      ) : weather ? (
-        <div className="app">
-          <div className="ico">
-            <img src={weather_icon(weather.weather[0].icon)}></img>
-          </div>
-          <div className="info">
-            {location} {new Date(weather.dt * 1000).toLocaleString()}
-            <p>Ghi chú: {getWeatherIcon(weather.weather[0].icon).note}</p>
-            <p>Nhiệt Độ: {weather.main.temp}°C</p>
-            <p>Độ ẩm: {weather.main.humidity}%</p>
-            <p>Áp suất: {weather.main.pressure}hPa</p>
-            <p>Mây: {weather.weather[0]?.description}</p>
-            <p>Gió: {weather.wind.speed}m/s</p>
-            <p>Hướng Gió: {windDir(weather.wind.deg)}</p>
-          </div>
-          <button className="submit" onClick={handleGoBack}>
-            Quay lại
-          </button>
-        </div>
+    <>
+      {Loading ? (
+        <LoadingAnimation />
       ) : (
-        <p>Đang tải dữ liệu thời tiết...</p>
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
+          {!showApp ? (
+            <form>
+              <h1>Nhập Vị Trí</h1>
+              <input
+                className="input"
+                type="text"
+                value={location}
+                onChange={(e) => {
+                  setLocation(e.target.value);
+                }}
+                placeholder="Nhập tên thành phố hoặc địa điểm"
+              />
+              <button className="submit" onClick={handleSubmit}>
+                Xác Nhận
+              </button>
+            </form>
+          ) : error ? (
+            // Hiển thị thông báo lỗi và nút quay lại nếu nhập sai vị trí
+            <div className="error">
+              <h2>Không tìm thấy vị trí "{location}"</h2>
+              <p>Vui lòng kiểm tra lại hoặc nhập một vị trí khác.</p>
+              <button className="submit" onClick={handleGoBack}>
+                Quay lại nhập vị trí
+              </button>
+            </div>
+          ) : weather ? (
+            <div className="app">
+              <div className="ico">
+                <img src={weather_icon(weather.weather[0].icon)}></img>
+              </div>
+              <div className="info">
+                {location} {new Date(weather.dt * 1000).toLocaleString()}
+                <p>Ghi chú: {getWeatherIcon(weather.weather[0].icon).note}</p>
+                <p>Nhiệt Độ: {weather.main.temp}°C</p>
+                <p>Độ ẩm: {weather.main.humidity}%</p>
+                <p>Áp suất: {weather.main.pressure}hPa</p>
+                <p>Mây: {weather.weather[0]?.description}</p>
+                <p>Gió: {weather.wind.speed}m/s</p>
+                <p>Hướng Gió: {windDir(weather.wind.deg)}</p>
+              </div>
+              <button className="submit" onClick={handleGoBack}>
+                Quay lại
+              </button>
+            </div>
+          ) : (
+            <p>Đang tải dữ liệu thời tiết...</p>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

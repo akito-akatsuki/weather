@@ -8,13 +8,14 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: #000000;
+  color: #fff;
 }
 
 .info {
   overflow: hidden;
   align-items: center;
   text-align: center;
-  background-color: cyan;
   display: block;
   margin-bottom: 20px;
 }
