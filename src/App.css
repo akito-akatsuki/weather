@@ -4,25 +4,109 @@
   box-sizing: border-box;
 }
 body {
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #30858d;
-  color: #fff;
+  min-height: 100vh;
 }
 
-.info {
-  overflow: hidden;
-  align-items: center;
-  text-align: center;
-  display: block;
-  margin-bottom: 20px;
+.bgvid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100dvh;
+  object-fit: cover;
+  z-index: -1;
 }
-.ico {
-  float: left;
-  margin-right: 50px;
+/* Giao diện cho màn hình lớn (máy tính) */
+@media screen and (min-width: 768px) {
+  .info {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    width: 300px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .submitback {
+    min-width: 300px;
+    min-height: 60px;
+    bottom: -600px;
+    display: inline-flex;
+    font-family: "Nunito", sans-serif;
+    font-size: 22px;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 1.3px;
+    font-weight: 700;
+    color: #313133;
+    background: #4fd1c5;
+    background: linear-gradient(
+      90deg,
+      rgba(129, 230, 217, 1) 0%,
+      rgba(79, 209, 197, 1) 100%
+    );
+    border: none;
+    border-radius: 1000px;
+    box-shadow: 12px 12px 24px rgba(79, 209, 197, 0.64);
+    transition: all 0.3s ease-in-out 0s;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    padding: 10px;
+  }
 }
+
+/* Giao diện cho màn hình nhỏ (điện thoại) */
+@media screen and (max-width: 767px) {
+  .info {
+    position: relative;
+    width: 100%;
+    bottom: 110px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+  }
+  .submitback {
+    min-width: 300px;
+    min-height: 60px;
+    top: 220px;
+    display: inline-flex;
+    font-family: "Nunito", sans-serif;
+    font-size: 22px;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 1.3px;
+    font-weight: 700;
+    color: #313133;
+    background: #4fd1c5;
+    background: linear-gradient(
+      90deg,
+      rgba(129, 230, 217, 1) 0%,
+      rgba(79, 209, 197, 1) 100%
+    );
+    border: none;
+    border-radius: 1000px;
+    box-shadow: 12px 12px 24px rgba(79, 209, 197, 0.64);
+    transition: all 0.3s ease-in-out 0s;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    padding: 10px;
+  }
+}
+
 .input {
   width: 100%;
   padding: 10px;
@@ -39,6 +123,7 @@ body {
   border-radius: 4px;
   text-align: center;
 }
+
 .submit {
   min-width: 300px;
   min-height: 60px;

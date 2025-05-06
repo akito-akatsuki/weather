@@ -18,6 +18,7 @@ import rainn from "./img/rainn.gif";
 import stormd from "./img/stormd.gif";
 import stormn from "./img/stormn.gif";
 import sunny from "./img/sunny.gif";
+import vidbg from "./img/backvid.mp4";
 //---------img----------------------//
 
 const App = () => {
@@ -148,9 +149,7 @@ const App = () => {
             </div>
           ) : weather ? (
             <div className="app">
-              <div className="ico">
-                <img src={weather_icon(weather.weather[0].icon)}></img>
-              </div>
+              <video className="bgvid" src={vidbg} autoPlay loop muted></video>
               <div className="info">
                 {location} {new Date(weather.dt * 1000).toLocaleString()}
                 <p>Ghi chú: {getWeatherIcon(weather.weather[0].icon).note}</p>
@@ -161,7 +160,7 @@ const App = () => {
                 <p>Gió: {weather.wind.speed}m/s</p>
                 <p>Hướng Gió: {windDir(weather.wind.deg)}</p>
               </div>
-              <button className="submit" onClick={handleGoBack}>
+              <button className="submitback" onClick={handleGoBack}>
                 Quay lại
               </button>
             </div>
