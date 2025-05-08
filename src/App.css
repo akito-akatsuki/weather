@@ -25,7 +25,7 @@ body {
   .info {
     position: absolute;
     top: 50px;
-    left: 50px;
+    left: 170px;
     width: 300px;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
@@ -36,7 +36,7 @@ body {
   .submitback {
     min-width: 300px;
     min-height: 60px;
-    bottom: -600px;
+    bottom: -400px;
     display: inline-flex;
     font-family: "Nunito", sans-serif;
     font-size: 22px;

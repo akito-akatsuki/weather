@@ -5,22 +5,41 @@ import "./loader/cursor.css";
 import getWeatherIcon from "./weathericon.js";
 import LoadingAnimation from "./loader/LoadingAnimation.js";
 
-// //---------img----------------------//
-import cloudy from "./img/cloudy.gif";
-import cloudyn from "./img/cloudyn.gif";
-import nightClear from "./img/nightclear.gif";
-import nightCloud from "./img/nightcloud.gif";
-import overCastd from "./img/overcastd.gif";
-import overCastn from "./img/overcastn.gif";
-import partlyCloud from "./img/partlycloud.gif";
-import raind from "./img/raind.gif";
-import rainn from "./img/rainn.gif";
-import stormd from "./img/stormd.gif";
-import stormn from "./img/stormn.gif";
-import sunny from "./img/sunny.gif";
+// // //---------img----------------------//
+// import cloudy from "./img/cloudy.gif";
+// import cloudyn from "./img/cloudyn.gif";
+// import nightClear from "./img/nightclear.gif";
+// import nightCloud from "./img/nightcloud.gif";
+// import overCastd from "./img/overcastd.gif";
+// import overCastn from "./img/overcastn.gif";
+// import partlyCloud from "./img/partlycloud.gif";
+// import raind from "./img/raind.gif";
+// import rainn from "./img/rainn.gif";
+// import stormd from "./img/stormd.gif";
+// import stormn from "./img/stormn.gif";
+// import sunny from "./img/sunny.gif";
 import vidbg from "./img/backvid.mp4";
-//---------img----------------------//
+// //---------img----------------------//
+//-----------chống trộm cắp-----------------//
+document.addEventListener("keydown", function (event) {
+  if (event.ctrlKey) {
+    event.preventDefault();
+  }
+  if (event.keyCode == 123) {
+    event.preventDefault();
+  }
+});
 
+document.addEventListener("contextmenu", function (event) {
+  event.preventDefault(); // Chặn chuột phải
+});
+
+document.addEventListener("keydown", function (event) {
+  if (event.ctrlKey && event.key === "u") {
+    event.preventDefault();
+  }
+});
+//-----------chống trộm cắp-----------------//
 const App = () => {
   const [location, setLocation] = useState(
     localStorage.getItem("location") || ""
@@ -55,25 +74,25 @@ const App = () => {
   };
 
   // Gán ảnh cho các mã thời tiết
-  const weather_icon = (dir) => {
-    if (dir === "01d") return sunny;
-    if (dir === "01n") return nightClear;
-    if (dir === "02d") return partlyCloud;
-    if (dir === "02n") return nightCloud;
-    if (dir === "03d") return cloudy;
-    if (dir === "03n") return cloudyn;
-    if (dir === "04d") return overCastd;
-    if (dir === "04n") return overCastn;
-    if (dir === "09d") return raind;
-    if (dir === "09n") return rainn;
-    if (dir === "10d") return raind;
-    if (dir === "10n") return rainn;
-    if (dir === "11d") return stormd;
-    if (dir === "11n") return stormn;
-    if (dir === "50d") return "./img/fog.gif";
-    if (dir === "50n") return "./img/fog.gif";
-    return "default";
-  };
+  // const weather_icon = (dir) => {
+  //   if (dir === "01d") return sunny;
+  //   if (dir === "01n") return nightClear;
+  //   if (dir === "02d") return partlyCloud;
+  //   if (dir === "02n") return nightCloud;
+  //   if (dir === "03d") return cloudy;
+  //   if (dir === "03n") return cloudyn;
+  //   if (dir === "04d") return overCastd;
+  //   if (dir === "04n") return overCastn;
+  //   if (dir === "09d") return raind;
+  //   if (dir === "09n") return rainn;
+  //   if (dir === "10d") return raind;
+  //   if (dir === "10n") return rainn;
+  //   if (dir === "11d") return stormd;
+  //   if (dir === "11n") return stormn;
+  //   if (dir === "50d") return "./img/fog.gif";
+  //   if (dir === "50n") return "./img/fog.gif";
+  //   return "default";
+  // };
   // Gán hướng gió
   const windDir = (dir) =>
     [
